@@ -4,7 +4,7 @@ RUN yum -y install \
 	git \
 	wget \
 	java-1.8.0-openjdk \
-  java-1.8.0-openjdk-devel
+	java-1.8.0-openjdk-devel
 
 ENV APPS_ROOT /apps
 RUN mkdir -p ${APPS_ROOT}
