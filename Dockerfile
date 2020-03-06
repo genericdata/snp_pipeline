@@ -5,6 +5,9 @@ RUN yum -y install \
 	wget \
 	java-1.8.0-openjdk \
 	java-1.8.0-openjdk-devel
+	
+RUN yum groupinstall "Development Tools"
+
 
 ENV APPS_ROOT /apps
 RUN mkdir -p ${APPS_ROOT}
