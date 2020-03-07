@@ -1,19 +1,9 @@
-/* GATK4 Variant Calling Pre Processing Pipeline
- * Usage: nextflow run ~/nextflow_work/carlton_snp_pipeline/main.nf
- */
-
-params.reads = "/scratch/cgsb/gencore/mk5636/Carlton/input_fastq/HT27VBGXC_n0{1,2}_{5}*.fastq*"
-params.ref = "/scratch/work/cgsb/genomes/Public/Protist/Plasmodium_vivax/PlasmoDB/Sal1/PlasmoDB-46_PvivaxSal1_Genome.fasta"
-params.outdir = "/scratch/cgsb/gencore/mk5636/Carlton/gatk4/out/"
-params.tmpdir ="/scratch/mk5636/scratch_temp_dir"
-
-// Define modules here
-BWA = 'bwa/intel/0.7.17'
-PICARD = 'picard/2.17.11'
-GATK = 'gatk/4.1.3.0'
-R = 'r/intel/3.4.2'
-SAMTOOLS = 'samtools/intel/1.9'
-SNPEFF = 'snpeff/4.3i'
+// GATK4 Variant Calling Pre Processing Pipeline
+ 
+params.reads = "/data/input_fastq/HT27VBGXC_n0{1,2}_{5}*.fastq*"
+params.ref = "/data/Protist/Plasmodium_vivax/PlasmoDB/Sal1/PlasmoDB-46_PvivaxSal1_Genome.fasta"
+params.outdir = "/data/gatk4/out/"
+params.tmpdir ="/tmp"
 
 println "reads: $params.reads"
 println "ref: $params.ref"
@@ -44,7 +34,6 @@ process align {
     script:
     readGroup = "@RG\\tID:${pair_id}\\tLB:${pair_id}\\tPL:ILLUMINA\\tPM:HISEQ\\tSM:${pair_id}"
     """
-    module load $BWA
     bwa mem -K 100000000 -v 3 -t ${task.cpus} -Y \
 	-R \"${readGroup}\" ${ref} ${reads[0]} ${reads[1]} > ${pair_id}_aligned_reads.sam
     """
@@ -66,7 +55,6 @@ process markDuplicatesSpark {
 
     script:
     """
-    module load $GATK
     gatk --java-options "-Djava.io.tmpdir=${params.tmpdir}" \
 	 MarkDuplicatesSpark \
 	-I ${aligned_reads} \
@@ -93,9 +81,6 @@ process getMetrics {
 
     script:
     """
-    module load $PICARD
-    module load $R
-    module load $SAMTOOLS
     java -jar \$PICARD_JAR \
         CollectAlignmentSummaryMetrics \
 	R=${params.ref} \
@@ -119,7 +104,6 @@ process haplotypeCaller {
 
     script:
     """
-    module load $GATK
     gatk HaplotypeCaller \
 	-R $ref \
 	-I $preprocessed_bam \
@@ -142,7 +126,6 @@ process selectVariants {
 
     script:
     """
-    module load $GATK
     gatk SelectVariants \
 	-R $ref \
 	-V $raw_variants \
@@ -169,7 +152,6 @@ process filterSnps {
 
     script:
     """
-    module load $GATK
     gatk VariantFiltration \
 	-R $ref \
 	-V $raw_snps \
@@ -192,7 +174,6 @@ process filterIndels {
 
     script:
     """
-    module load $GATK
     gatk VariantFiltration \
         -R $ref \
         -V $raw_indels \
