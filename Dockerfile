@@ -31,7 +31,7 @@ RUN mkdir -p ${APPS_ROOT}
 ENV BWA_VERSION 0.7.17
 
 ENV BWA_HOME ${APPS_ROOT}/bwa/${BWA_VERSION}
-ENV PATH ${BWA_HOME}/bin:${PATH}
+ENV PATH ${BWA_HOME}:${PATH}
 
 RUN git clone --branch v${BWA_VERSION} https://github.com/lh3/bwa.git ${BWA_HOME}
 RUN cd ${BWA_HOME} && make && cd
