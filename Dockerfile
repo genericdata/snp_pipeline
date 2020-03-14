@@ -132,4 +132,7 @@ RUN wget -O snpEff_v${SNPEFF_VERSION}_core.zip  https://sourceforge.net/projects
 
 ###############################################
 # R Packages Installation
-RUN R -e "install.packages('ggplot2','gsalib','ggplot2','reshape','gplots', repos = 'http://cran.us.r-project.org')"
+RUN R -e "install.packages('ggplot2', repos = 'http://cran.us.r-project.org')"
+RUN R -e "install.packages('gsalib', repos = 'http://cran.us.r-project.org')"
+RUN R -e "install.packages('reshape', repos = 'http://cran.us.r-project.org')"
+RUN R -e "install.packages('gplots', repos = 'http://cran.us.r-project.org')"
