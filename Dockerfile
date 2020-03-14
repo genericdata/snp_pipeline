@@ -61,7 +61,8 @@ ENV GATK_JAR ${GATK_HOME}/gatk-package-${GATK_VERSION}-local.jar
 ENV PATH ${GATK_HOME}:${PATH}
 
 RUN wget https://github.com/broadinstitute/gatk/releases/download/${GATK_VERSION}/gatk-${GATK_VERSION}.zip \
-	&& mkdir ${APPS_ROOT}/gatk \
+        && mkdir ${APPS_ROOT}/gatk \
+        && unzip gatk-${GATK_VERSION}.zip \
         && mv gatk-${GATK_VERSION} ${APPS_ROOT}/gatk/${GATK_VERSION} \
         && rm gatk-${GATK_VERSION}.zip
 
