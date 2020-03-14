@@ -129,3 +129,7 @@ RUN wget -O snpEff_v${SNPEFF_VERSION}_core.zip  https://sourceforge.net/projects
         && mkdir ${APPS_ROOT}/snpeff \
         && unzip snpEff_v${SNPEFF_VERSION}_core.zip \
         && mv snpEff ${APPS_ROOT}/snpeff/${SNPEFF_VERSION}
+
+###############################################
+# R Packages
+RUN R -e "install.packages('ggplot2', repos = 'http://cran.us.r-project.org')"
