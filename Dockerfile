@@ -62,8 +62,8 @@ ENV PATH ${GATK_HOME}:${PATH}
 
 RUN wget https://github.com/broadinstitute/gatk/releases/download/${GATK_VERSION}/gatk-${GATK_VERSION}.zip \
 	&& mkdir ${APPS_ROOT}/gatk \
-	&& unzip gatk-${GATK_VERSION}.zip -d ${GATK_HOME} \
-	&& rm gatk-${GATK_VERSION}.zip
+        && mv gatk-${GATK_VERSION} ${APPS_ROOT}/gatk/${GATK_VERSION} \
+        && rm gatk-${GATK_VERSION}.zip
 
 ###############################################
 #R = 'r/intel/3.4.2'
